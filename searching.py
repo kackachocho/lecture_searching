@@ -27,24 +27,33 @@ def read_data(file_name, key):
 
 #print(read_data(file_name='sequential.json', key='unordered_numbers'))
 
-# # n = len(numbers)
-# def linear_search(numbers, searched_number):
-#     positions = []  # +1
-#     for index, number in enumerate(numbers):  # +n
-#         if number == searched_number:  # +n
-#             positions.append(index)  # +n
-#         else:
-#             continue
-#     # d["positions"] = list_idx
-#     # d["count"] = count
-#     return positions, len(positions)  # +1
-#
-# print(linear_search(numbers=[5, 3, 5, 7, 1], searched_number=5))
+# n = len(numbers)
+def linear_search(numbers, searched_number):
+    positions = []  # +1
+    for index, number in enumerate(numbers):  # +n
+        if number == searched_number:  # +n
+            positions.append(index)  # +n
+        else:
+            continue
+    # d["positions"] = list_idx
+    # d["count"] = count
+    return {
+        "positions": positions,
+        "count": len(positions)
+    }# +1
+
+print(linear_search(numbers=[5, 3, 5, 7, 1], searched_number=5))
 
 
 def main():
     sequential_data = read_data("sequential.json", "unordered_numbers")
     print(sequential_data)
 
+    target = 5
+    result = linear_search(sequential_data, target)
+    print(f"vysledky pro hledane cislo {target}:")
+    print(f"pozice: {result['positions']}")
+    print(f"cetnost: {result['count']}")
+    
 if __name__ == '__main__':
     main()
