@@ -1,5 +1,6 @@
 import os
-
+import time
+import matplotlib.pyplot as plt
 
 # get current working directory path
         #chceme dostat cestu k aktualnimu pracovnimu adresari
@@ -41,8 +42,33 @@ def linear_search(numbers, searched_number):
         "positions": positions,
         "count": len(positions)
     }# +1
+#print(linear_search(numbers=[5, 3, 5, 7, 1], searched_number=5))
 
-print(linear_search(numbers=[5, 3, 5, 7, 1], searched_number=5))
+
+def binary_search(numbers, searched_number):
+    """
+        Binární vyhledávání. Půlí interval, dokud nenajde shodu.
+        Složitost: O(log n) - extrémně rychlé i pro velké seznamy.
+        POZOR: Vyžaduje seřazený seznam! - gemini
+        """
+    left = 0
+    right = len(numbers) -1
+
+    while left <= right:
+        mid = (left + right) // 2
+        mid_value = numbers[mid]
+
+        if mid_value == searched_number:
+            return mid  # cislo mame, vracime index
+        elif mid_value < searched_number:
+            left = mid + 1  # hladame na prave strane
+        else:
+            right = mid - 1  # hledame na leve strane
+
+    return None  # kdyz cislo v seznamu neni
+
+
+
 
 
 def main():
@@ -54,6 +80,27 @@ def main():
     print(f"vysledky pro hledane cislo {target}:")
     print(f"pozice: {result['positions']}")
     print(f"cetnost: {result['count']}")
-    
+
+    cisla = read_data("sequential.json", "ordered_numbers")
+    if cisla is not None: # pokud neni seznam prazdny
+        target = 23 #zadefinuju target
+        index = binary_search(cisla, target) # zadefinuju index a tam BS se seznamem cvisel a targetem
+        if index is not None:
+            print(f"cislo {target} nalezeno na indexu: {index}")
+        else:
+            print(f"císlo {target} se v seznamu nenachazi.")
+    else:
+        print("data se nepodarilo nacist.")
+
+    sizes = [100, 500, 1000, 5000, 10000]
+    linear_times = []
+    binary_times = []
+    target = 2000
+    for size in sizes:
+        data_unordered = unordered_sequence(max_len=size)
+        data_ordered = sorted(data_unordered)
+
+# NEJDE STAHNOUT matplotlib
+
 if __name__ == '__main__':
     main()
